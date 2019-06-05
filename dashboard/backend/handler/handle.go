@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/coreos/go-oidc"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/spark-cluster/pkg/apis"
 	"github.com/spark-cluster/pkg/util/k8sutil"
 	"golang.org/x/oauth2"
+	"github.com/coreos/go-oidc"
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"

@@ -16,6 +16,7 @@ import (
 
 func (handler *APIHandler) ListSparkCluster(w http.ResponseWriter, r *http.Request) {
 	user := r.Header.Get("User")
+
 	sc := &sparkclusterv1alpha1.SparkClusterList{}
 	//TODO() add label selector
 	opts := &client.ListOptions{}
@@ -33,7 +34,7 @@ func (handler *APIHandler) ListSparkCluster(w http.ResponseWriter, r *http.Reque
 }
 
 func (handler *APIHandler) CreateSparkCluster(w http.ResponseWriter, r *http.Request) {
-	user := r.Header.Get("User")
+	user := w.Header().Get("User")
 
 	sc := new(sparkclusterv1alpha1.SparkCluster)
 
