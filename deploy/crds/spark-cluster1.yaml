@@ -1,0 +1,16 @@
+apiVersion: spark.k8s.io/v1alpha1
+kind: SparkCluster
+metadata:
+  labels:
+    app: user2-cluster
+  name: user2-cluster
+spec:
+  gitRepo: https://github.com/Toydi/WordCount.git
+  gitUserName: Toydi
+  gitUserEmail: 529660369@qq.com
+  clusterPrefix: user2
+  slaveNum: 3
+  pvcEnable: False
+  nfs: True
+
+

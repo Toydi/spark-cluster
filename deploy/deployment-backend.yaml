@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-backend
+  labels:
+    name: spark-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: spark-backend
+  template:
+    metadata:
+      labels:
+        name: spark-backend
+    spec:
+      serviceAccountName: spark-cluster-operator
+      containers:
+        - name: spark-backend
+          image: "registry.njuics.cn/qr/spark-operator:latest"
+          imagePullPolicy: Always
+          command:
+          - /usr/local/bin/backend
+          - --frontend-dir
+          - /usr/local/frontend
+          ports:
+          - name: http
+            containerPort: 8081

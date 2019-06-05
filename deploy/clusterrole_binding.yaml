@@ -1,0 +1,12 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: spark-cluster-operator
+subjects:
+- kind: ServiceAccount
+  name: spark-cluster-operator
+  namespace: bdkit
+roleRef:
+  kind: ClusterRole
+  name: spark-cluster-operator
+  apiGroup: rbac.authorization.k8s.io

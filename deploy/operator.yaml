@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-cluster-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: spark-cluster-operator
+  template:
+    metadata:
+      labels:
+        name: spark-cluster-operator
+    spec:
+      serviceAccountName: spark-cluster-operator
+      containers:
+        - name: spark-cluster-operator
+          # Replace this with the built image name
+          image: registry.njuics.cn/qr/spark-operator:latest
+          ports:
+          - containerPort: 60000
+            name: metrics
+          command:
+          - spark-cluster-operator 
+          imagePullPolicy: Always
+          readinessProbe:
+            exec:
+              command:
+                - stat
+                - /tmp/operator-sdk-ready
+            initialDelaySeconds: 4
+            periodSeconds: 10
+            failureThreshold: 1
+          env:
+            - name: WATCH_NAMESPACE
+              value: ""
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "spark-cluster-operator"

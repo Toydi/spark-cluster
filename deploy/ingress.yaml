@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: backend-ingress
+spec:
+  rules:
+    - host: bdkit.nju.edu.cn
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: backend-service
+              servicePort: 8081

@@ -1,0 +1,27 @@
+apiVersion: spark.k8s.io/v1alpha1
+kind: SparkCluster
+metadata:
+  labels:
+    app: user1-cluster
+  name: user1-cluster
+spec:
+  # Add fields here
+  gitRepo: https://github.com/wdongyu/wordcount.git
+  clusterPrefix: user1-cluster
+  slaveNum: 3
+  pvcEnable: False
+  nfs: True 
+  # ports:
+  #   - port: 9000
+  #     name: hdfs
+
+  # resources:
+  #   limits:
+  #     cpu: "2"
+  #     memory: "2000Mi"
+  #   requests:
+  #     cpu: "1"
+  #     memory: "1500Mi"
+
+  # nfs: True
+
