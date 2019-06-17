@@ -129,6 +129,11 @@ func (in *SparkClusterSpec) DeepCopyInto(out *SparkClusterSpec) {
 		copy(*out, *in)
 	}
 	in.Resources.DeepCopyInto(&out.Resources)
+	if in.Datasets != nil {
+		in, out := &in.Datasets, &out.Datasets
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	return
 }
 

@@ -3,7 +3,7 @@ package sparkcluster
 import (
 	"context"
 	"reflect"
-
+	"fmt"
 	sparkv1alpha1 "github.com/spark-cluster/pkg/apis/spark-cluster/v1alpha1"
 
 	corev1 "k8s.io/api/core/v1"
@@ -39,6 +39,13 @@ func (r *ReconcileSparkCluster) updateStatus(instance *sparkv1alpha1.SparkCluste
 		instance.Status.Phase = sparkv1alpha1.SparkClusterPhaseRunning
 		if err := r.updateEndpoints(instance, pods, *uiService); err != nil {
 			log.Error(err, "failed to update pod endpoints")
+		}
+		if len(instance.Status.VscodeUrl)==0{
+			for _,s:=range uiService.Spec.Ports{
+				if s.Name=="code-server"{
+					instance.Status.VscodeUrl="114.212.189.141:"+fmt.Sprint(s.NodePort)
+				}
+			}
 		}
 
 	} else if podStatuses[corev1.PodFailed] > 0 {

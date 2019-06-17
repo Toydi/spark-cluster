@@ -1,7 +1,11 @@
 package sparkcluster
 
 import (
+	"path"
+
 	sparkv1alpha1 "github.com/spark-cluster/pkg/apis/spark-cluster/v1alpha1"
+	"github.com/spark-cluster/pkg/controller/dataset"
+	"github.com/spark-cluster/pkg/controller/internal"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -39,7 +43,7 @@ func (r *ReconcileSparkCluster) newMasterPod(instance *sparkv1alpha1.SparkCluste
 	// volumeMounts_git=append(volumeMounts_git,corev1.VolumeMount{Name:"code",MountPath:"/root/code"})
 	pvc := corev1.PersistentVolumeClaimVolumeSource{ClaimName: instance.Spec.ClusterPrefix + "-" + "vscode-pvc"}
 	volumes = append(volumes, corev1.Volume{Name: "code", VolumeSource: corev1.VolumeSource{PersistentVolumeClaim: &pvc}})
-	return &corev1.Pod{
+	masterpod := &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      masterName(instance),
 			Namespace: instance.Namespace,
@@ -105,6 +109,15 @@ func (r *ReconcileSparkCluster) newMasterPod(instance *sparkv1alpha1.SparkCluste
 			Volumes: volumes,
 		},
 	}
+
+	if len(instance.Spec.Datasets) > 0 {
+		for _, ds := range instance.Spec.Datasets {
+			// Mount dataset pvc to master pod.
+			internal.Volume{dataset.GeneralName(ds), path.Join(internal.CodeVolumeMountPath, ds), true}.AddToPod(masterpod)
+		}
+	}
+
+	return masterpod
 }
 
 //gitSidecarCommand := fmt.Sprintf("git clone %s %s && git config --global user.name %s && git config --global user.email %s && git config --global http.proxy %s && git config --global https.proxy %s", g.Repo, path.Join(g.MountPath, g.Name),g.GitUserName,g.GitUserEmail,gitHttpProxy,gitHttpProxy)

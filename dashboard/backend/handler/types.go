@@ -1,11 +1,13 @@
 package handler
 
 import (
-	"github.com/spark-cluster/pkg/apis/spark-cluster/v1alpha1"
+	sparkv1alha1"github.com/spark-cluster/pkg/apis/spark-cluster/v1alpha1"
+	datasetv1alha1"github.com/spark-cluster/pkg/apis/dataset/v1alpha1"
 )
 
 const (
 	Namespace = "bdkit"
+	ResourceNamespace = "bdkit-resources"
 )
 
 const (
@@ -14,7 +16,12 @@ const (
 )
 
 type SparkClusterList struct {
-	SparkClusters []v1alpha1.SparkCluster `json:"sparkclusters"`
+	SparkClusters []sparkv1alha1.SparkCluster `json:"sparkclusters"`
+	GitRepos []string `json:"gitrepos"`
+} 
+
+type DatasetList struct{
+	Datasets []datasetv1alha1.Dataset `json:"datasets"`
 }
 
 type User struct {

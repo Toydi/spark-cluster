@@ -7,7 +7,7 @@ spec:
     - host: bdkit.nju.edu.cn
       http:
         paths:
-          - path: /
+          - path: /bdkit
             backend:
               serviceName: backend-service
-              servicePort: 8081
+              servicePort: 80

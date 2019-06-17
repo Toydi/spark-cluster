@@ -41,12 +41,6 @@ rules:
 - apiGroups:
   - spark.k8s.io
   resources:
-  - sparkclusters
+  - '*'
   verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
-  - patch
-  - delete
+  - '*'

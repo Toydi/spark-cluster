@@ -40,11 +40,13 @@ func (v Volume) AddToPodSpec(spec *v1.PodSpec) {
 		},
 	})
 	if len(spec.Containers) > 0 {
-		spec.Containers[0].VolumeMounts = append(spec.Containers[0].VolumeMounts, v1.VolumeMount{
-			MountPath: v.MountPath,
-			Name:      v.Name,
-			ReadOnly:  v.ReadOnly,
-		})
+		for i := 0; i < len(spec.Containers); i++ {
+			spec.Containers[i].VolumeMounts = append(spec.Containers[i].VolumeMounts, v1.VolumeMount{
+				MountPath: v.MountPath,
+				Name:      v.Name,
+				ReadOnly:  v.ReadOnly,
+			})
+		}
 	}
 }
 

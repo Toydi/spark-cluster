@@ -32,10 +32,12 @@ type SparkClusterSpec struct {
 	GitUserName   string                      `json:"gitUserName"`
 	GitUserEmail  string                      `json:"gitUserEmail"`
 	SlaveNum      int                         `json:"slaveNum"`
+	Shared        string                      `json:"shared"`         
 	Ports         []corev1.ServicePort        `json:"ports,omitempty"`
 	PvcEnable     bool                        `json:"pvcEnable,omitempty"`
 	Resources     corev1.ResourceRequirements `json:"resources,omitempty"`
 	NFS           bool                        `json:"nfs,omitempty"`
+	Datasets      []string                    `json:"datasets,omitempty"`
 }
 
 // SparkClusterPhase defines all phase of SparkCluster lifecycle.
@@ -70,6 +72,9 @@ type SparkClusterStatus struct {
 
 	// Exposed Port for UI
 	ExposedPorts []corev1.ServicePort `json:"exposedPorts,omitempty"`
+
+	//exposed vscode url
+	VscodeUrl string `json:"vscodeurl,omitempty"`
 }
 
 // +genclient

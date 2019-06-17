@@ -1,0 +1,8 @@
+apiVersion: spark.k8s.io/v1alpha1
+kind: Dataset
+metadata:
+  name: dataset1
+spec:
+  # Add fields here
+  size: 200Mi
+  description: A test dataset

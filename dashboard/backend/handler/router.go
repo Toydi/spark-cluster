@@ -49,6 +49,18 @@ func NewRouter(handler *APIHandler) http.Handler {
 
 	var privateRoutes = Routes{
 		{
+			"ListDatasets",
+			"GET",
+			"/apis/dataset",
+			handler.ListDatasets,
+		},
+		{
+			"CreateDataset",
+			"POST",
+			"/apis/dataset",
+			handler.CreateDataset,
+		},		
+		{
 			"ListSparkCluster",
 			"GET",
 			"/apis/sparkcluster",
@@ -60,6 +72,18 @@ func NewRouter(handler *APIHandler) http.Handler {
 			"/apis/sparkcluster",
 			handler.CreateSparkCluster,
 		},
+		{
+			"DeleteSparkCluster",
+			"DELETE",
+			"/apis/sparkcluster/{sparkcluster}",
+			handler.DeleteSparkCluster,
+		},
+		{
+			"UpdateSparkCluster",
+			"PUT",
+			"/apis/sparkcluster/{sparkcluster}",
+			handler.UpdateSparkCluster,
+		},		
 		{
 			"CurrentUser",
 			"GET",

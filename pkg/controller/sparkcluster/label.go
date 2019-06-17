@@ -5,10 +5,9 @@ import (
 	"fmt"
 
 	sparkv1alpha1 "github.com/spark-cluster/pkg/apis/spark-cluster/v1alpha1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/labels"	
 	"github.com/spark-cluster/pkg/controller/internal"
-
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 )
 
 func masterName(instance *sparkv1alpha1.SparkCluster) string {
@@ -72,14 +71,31 @@ func AddUserLabel(sc *sparkv1alpha1.SparkCluster, user string) {
 	sc.ObjectMeta.Labels[internal.LabelUserKey] = user
 }
 
+func AddSharedLabel(sc *sparkv1alpha1.SparkCluster, shared string) {
+	if sc.ObjectMeta.Labels == nil {
+		sc.ObjectMeta.Labels = make(map[string]string)
+	}
+	sc.ObjectMeta.Labels[internal.LabelShareKey] = shared
+}
+
 func SelectorForUser(user string) labels.Selector {
 	selector := &metav1.LabelSelector{
 		MatchLabels: map[string]string{
 			internal.LabelUserKey: user,
 		},
 	}
-
 	labelSelector, _ := metav1.LabelSelectorAsSelector(selector)
 
 	return labelSelector
+}
+
+func SelectorForShare(flag string) labels.Selector{
+	selector := &metav1.LabelSelector{
+		MatchLabels: map[string]string{
+			internal.LabelShareKey: flag,
+		},
+	}
+	labelSelector, _ := metav1.LabelSelectorAsSelector(selector)
+
+	return labelSelector	
 }
